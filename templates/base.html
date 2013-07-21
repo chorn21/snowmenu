@@ -30,7 +30,19 @@
             </div>
         </div>
     </div>
+{% load staticfiles %}
+<script type="text/javascript" src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-tooltip.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/moment.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/objects/menu.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/objects/food.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/objects/options.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/objects/comment.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/objects/user.js' %}"></script>
+
   {% block content %}{% endblock %}
+
 </body>
 
 

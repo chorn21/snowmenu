@@ -163,16 +163,6 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.9.1.min.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-tooltip.min.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/nvd3/lib/d3.v2.min.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/nvd3/nv.d3.min.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/objects/menu.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/objects/food.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/objects/options.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/objects/comment.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/objects/user.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/update_menu.js') }}"></script>
-
+{% load staticfiles %}
+<script type="text/javascript" src="{% static 'js/update_menu.js' %}"></script>
 {% endblock %}

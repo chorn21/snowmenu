@@ -13,9 +13,10 @@ $(function() {
     // get all menus for the week and assign them to the appropriate day tab
     function getMenus() {
         console.log("getting menus");
-        $.ajax('http://ommule.ausoff.indeed.net:5005/json_data?user=carolineh', {
+        $.ajax('http://localhost:8000/json_data?user="zak"&date="2013-07-19"', {
             'method' : 'GET',
             'success' : function(data) {
+                console.log(data);
                 console.log("was successful");
                 $.each(data, function(i) {
                     var d = data[i];

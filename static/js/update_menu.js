@@ -65,7 +65,7 @@ $(function() {
     }
 
     function getFoods() {
-        $.ajax('http://ommule.ausoff.indeed.net:5005/json_data?all_food=1', {
+        $.ajax('http://localhost:8000/json_data?all_food=1', {
             'method' : 'GET',
             'success' : function(data) {
                 // for each food item in the data.foods array, create a Food object and add it to the appropriate food table
