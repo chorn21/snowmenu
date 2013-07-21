@@ -1,6 +1,6 @@
 # Django settings for snowmenu project.
 import os
-BASE_DIR = '/Users/caroline/indeedlabs/snowmenu_zak/snowmenu/'
+BASE_DIR = '/Users/zak/indeed/snowmenu/'
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
