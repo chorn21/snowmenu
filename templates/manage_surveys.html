@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Snowmenu{% endblock %}
+{%block head%} {% endblock %}
+
+{% block content %}
+
+<div id="main" class="container">
+    <div class="row">
+        <form id="optionForm" action="/manage_surveys" method="POST">
+            <input id="optionCountInput" type="hidden" name="numOptions" value="2">
+            <label for="question"> Question: </label>
+            <input type="text" id="question" name="question">
+            <label for="optionList"> Options: </label>
+            <ol id="optionList">
+                <li id="option0"> <input type="text" name="option0" value="Yes">
+                <li id="option1"> <input type="text" name="option1" value="No">
+            </ol>
+            <button type="button" id="addOption" class="btn">Add Option</button>
+            <button type="button" id="removeOption" class="btn">Remove Option</button>
+            <input id="optionSubmit" class="btn btn-primary" type="submit" name="action" value="Add Survey">
+        </form>
+    </div>
+    <div class="row">
+         {% for surveyResult in c['enabledSurveyResults'] %}
+             {{ surveyResult['question'] }}
+             <ul>
+                 {% for optionCount in surveyResult['optionCounts'] %}
+                     <li>{{ optionCount['option'] }}: {{ optionCount['count'] }}
+                 {% endfor %}
+             </ul>
+             <form action="/manage_surveys" method="POST">
+                 <input type="hidden" name="survey_id" value="{{ surveyResult['survey_id'] }}">
+                 <input type="submit" class="btn btn-primary" name="action" value="Disable">
+             </form>
+         {% endfor %}
+         <h3>Disabled Surveys:</h3>
+         {% for survey in c['disabledSurveys'] %}
+             {{ survey.question }}
+             <form action="/manage_surveys" method="POST">
+                 <input type="hidden" name="survey_id" value="{{ survey.survey_id }}">
+                 <input type="submit" class="btn btn-primary" name="action" value="Enable">
+             </form>
+         {% endfor %}
+    </div>
+</div>
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.9.1.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/objects/survey.js') }}"></script>
+{% endblock %}

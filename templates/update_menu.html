@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+{% block title %}Update Menu{% endblock %}
+
+{% block content %}
+
+<div id="main" class="container">
+    <div class="row">
+        <div class="span8">
+            <h1 class="heading-text">Update Menu</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span8">
+            <h3>Select a food item from the lists below.</h3>
+            <h4>Entrées</h4>
+            <div class="table-wrapper">
+                <table id="entree-table" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Contains gluten</th>
+                            <th>Contains onions</th>
+                            <th>Contains nuts</th>
+                            <th>Contains dairy</th>
+                            <th>Vegetarian option</th>
+                            <th>Add</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <h4>Soups and Salads</h4>
+            <div class="table-wrapper">
+                <table id="soup-salad-table" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Contains gluten</th>
+                            <th>Contains onions</th>
+                            <th>Contains nuts</th>
+                            <th>Contains dairy</th>
+                            <th>Vegetarian option</th>
+                            <th>Add</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <h4>Sides</h4>
+            <div class="table-wrapper">
+                <table id="side-table" class="table table-striped table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Contains gluten</th>
+                        <th>Contains onions</th>
+                        <th>Contains nuts</th>
+                        <th>Contains dairy</th>
+                        <th>Vegetarian option</th>
+                        <th>Add</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <h4>Desserts</h4>
+            <div class="table-wrapper">
+                <table id="dessert-table" class="table table-striped table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Contains gluten</th>
+                        <th>Contains onions</th>
+                        <th>Contains nuts</th>
+                        <th>Contains dairy</th>
+                        <th>Vegetarian option</th>
+                        <th>Add</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="span4">
+            <form>
+                <h3>Choose a menu to update.</h3>
+                <select id="date-menu">
+                </select>
+            </form>
+            <div id="current-menu-updating">
+                <h3>Menu for <span id="menu-date"></span></h3>
+                <h4>Entrees</h4>
+                <div class="entree">
+                </div>
+                <h4>Soups and Salads</h4>
+                <div class="soup-salad">
+                </div>
+                <h4>Sides</h4>
+                <div class="side">
+                </div>
+                <h4>Desserts</h4>
+                <div class="dessert">
+                </div>
+                <button class="btn btn-primary" type="submit" id="submit-menu">Submit menu</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span8">
+            <h3>Don't see what you're looking for? Enter a new item here.</h3>
+            <form>
+                <fieldset>
+                    <div class="food-name-input">
+                        <input id="food-item-name" type="text" placeholder="food item name">
+                    </div>
+                    <div class="food-desc-input">
+                        <textarea id="food-item-desc" rows="3" placeholder="food item description"></textarea>
+                    </div>
+                    <div class="food-types">
+                        <label class="radio inline">
+                            <input type="radio" name="optionsRadio" id="entree" value="entree" class="food-type"> entrée
+                        </label>
+                        <label class="radio inline">
+                            <input type="radio" name="optionsRadio" id="soup-salad" value="soup-salad" class="food-type"> salad or soup
+                        </label>
+                        <label class="radio inline">
+                            <input type="radio" name="optionsRadio" id="side" value="side" class="food-type"> side
+                        </label>
+                        <label class="radio inline">
+                            <input type="radio" name="optionsRadio" id="dessert" value="dessert" class="food-type"> dessert
+                        </label>
+                    </div>
+                    <div class="food-options">
+                        <label class="checkbox inline">
+                            <input type="checkbox" id="gluten" value="gluten"> contains gluten
+                        </label>
+                        <label class="checkbox inline">
+                            <input type="checkbox" id="onions" value="onions"> contains onions
+                        </label>
+                        <label class="checkbox inline">
+                            <input type="checkbox" id="nuts" value="nuts"> contains nuts
+                        </label>
+                        <label class="checkbox inline">
+                            <input type="checkbox" id="dairy" value="dairy"> contains dairy
+                        </label>
+                        <label class="checkbox inline">
+                            <input type="checkbox" id="vegetarian" value="vegetarian"> vegetarian option
+                        </label>
+                    </div>
+                    <div class="submit-button-container">
+                        <button id="submit-new-item" class="btn btn-primary">Submit</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.9.1.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-tooltip.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/nvd3/lib/d3.v2.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/nvd3/nv.d3.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/objects/menu.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/objects/food.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/objects/options.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/objects/comment.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/objects/user.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/update_menu.js') }}"></script>
+
+{% endblock %}
