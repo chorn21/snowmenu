@@ -16,6 +16,6 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', views.index, name='index'),
-    url(r'^json_data', views.json_data, name='json_data')
-
+    url(r'^json_data', views.json_data, name='json_data'),
+    url(r'^update_menu', views.update_food, name='update_food')
 )

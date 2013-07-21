@@ -7,6 +7,9 @@ from models import *
 def index(request):
     return TemplateResponse(request,'templates/index.html',{})
 
+def update_food(request):
+    return TemplateResponse(request, 'templates/update_menu.html')
+
 @ajax_request
 def json_data(request):
     from datetime import datetime, timedelta
@@ -67,3 +70,5 @@ def json_data(request):
                     
     else:
         return c
+
+
