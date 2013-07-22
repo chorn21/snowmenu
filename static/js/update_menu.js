@@ -5,8 +5,8 @@ $(function() {
 
     var today = new Date();
     var foodItems = {};
-    var menuList;
-    var currentMenu;
+    var menuList = {};
+    var currentMenu = {};
     var createNewFoodItemBtn = $("#submit-new-item");
     var submitMenuBtn = $("#submit-menu");
 
@@ -15,28 +15,42 @@ $(function() {
     getFoods();
 
     function getMenus() {
-        $.ajax('get menus URL', {
+        $.ajax('http://localhost:8000/json_data?user="zak"&date="2013-07-19"', {
             'method' : 'GET',
             'success' : function(data) {
-                $.each(data, function(i) {
-                    var d = data[i];
-                    var menu = new Menu(d.date, d.foods, d.comments);
+                console.log("was successful");
+                $.each(data.week, function(i) {
+                    var d = data.week[i];
+                    var foods = {};
+                    var comments = {};
+                    $.each(data.week[i].foods, function(j) {
+                        var d = data.week[i].foods[j];
+                        foods[j] = new Food(d.name, d.description, (d.food_type ? d.food_type : "entree"), d.snowmen, d.puddles, new Options(d.gluten, d.onions, d.nuts, d.dairy, d.vegetarian));
+                    });
+                    $.each(data.week[i].comments, function(j) {
+                        var d = data.week[i].comments;
+                        comments[j] = new Comment(d.user_name, d.text, d.snowmen);
+                    });
+                    var menu = new Menu(d.date, foods, comments);
                     addToMenuList(menu);
                 });
+            },
+            'error' : function() {
+                console.log("shit's fucked up");
             }
-
         });
     }
 
-    // click handler for the date options
-    $(".date-option").click(function(e) {
+    $("#date-menu").change(function(e) {
         // grab menu from date-option's data attribute and assign it to currentMenu
         var menu = $(e.target).data("menu");
+        console.log(menu);
         currentMenu = menu;  // assign the selected menu to currentMenu
         $("#menu-date").append(moment(currentMenu.date).format("l"));  // show the date of currentMenu
         // add each food item on currentMenu.foods to the "updating menu" list
         $.each(currentMenu.foods, function(i) {
             var d = currentMenu.foods[i];
+            console.log(d);
             // append each of currentMenu's food items to the updating list
             $("#current-menu-updating ."+d.type).append('<div id="'+d.name+'" class="'+d.type+'-item"><i class="icon-remove"></i><h5 class="item-name">'+d.name+'</h5><p class="item-desc">'+d.description+'</p></div>');
             // set that food item's data attribute as the Food object
@@ -52,7 +66,6 @@ $(function() {
             });
         });
     });
-
     function addToMenuList(menu) {
         menuList[menu.date] = menu;
         var dateMenu = $("#date-menu");
@@ -60,18 +73,20 @@ $(function() {
         // append date to the list
         var dateOption = $('<option class="date-option">'+dateMoment.format('l')+'</option>');
         dateOption.data("menu", menu);
+        console.log(dateOption.data("menu"));
+        // click handler for the date options
         dateMenu.append(dateOption);
-        // assign menu to data attribute of list item
     }
 
     function getFoods() {
         $.ajax('http://localhost:8000/json_data?all_food=1', {
             'method' : 'GET',
             'success' : function(data) {
+                console.log(data);
                 // for each food item in the data.foods array, create a Food object and add it to the appropriate food table
                 $.each(data.foods, function(i) {
                     var d = data.foods[i];
-                    foodItems[d.name] = new Food(d.name, d.description, d.food_type, d.snowmen, d.puddles, new Options(d.options.gluten, d.options.onions, d.options.nuts, d.options.dairy, d.options.vegetarian));
+                    foodItems[d.name] = new Food(d.name, d.description, (d.food_type ? d.food_type : "entree"), d.snowmen, d.puddles, new Options(d.options.gluten, d.options.onions, d.options.nuts, d.options.dairy, d.options.vegetarian));
                     // append each foodItem to the appropriate table
                     addToItemList(foodItems[d.name], "#"+foodItems[d.name].type+"-table");
                 });
@@ -97,6 +112,7 @@ $(function() {
         }
         // create a new Food object from the inputted data
         var newItem = new Food(removeSpaces($("#food-item-name").val()), desc, type, 0, 0, new Options(gluten, onions, nuts, dairy, vegetarian));
+        var date = new Date(currentMenu.date);
         var data = {
             'name' : name,
             'description' : desc,
@@ -108,20 +124,26 @@ $(function() {
             'nuts' : nuts,
             'dairy' : dairy,
             'vegetarian' : vegetarian,
-            'date' : today.toISOString().substring(0, 10)
+            'date' : date.toISOString().substring(0, 10)
         };
+        console.log(data);
         // post the new food item to the server
-        $.ajax('/food_post', {
+        $.ajax('/json_data?food_post', {
             'method': 'POST',
             'data': JSON.stringify(data),
-            'complete': function() {
+            'success': function() {
                 console.log("food posted successfully");
                 currentMenu.foods[name] = newItem;
+                addToItemList(newItem, "#"+newItem.type+"-table");
+            },
+            'error' : function() {
+                console.log("boooo");
             },
             contentType: 'application/json',
             // This is the type of data you're expecting back from the server.
             dataType: 'json'
         });
+        return false;
     });
 
     function removeSpaces(itemName) {

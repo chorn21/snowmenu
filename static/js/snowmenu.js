@@ -3,10 +3,10 @@
 
 $(function() {
 
-    var today = new Date();
+    var today = new Date("2013-07-18");
     var date = today.toISOString().substring(0, 10);
-    var menuList;
-    var currentMenu;
+    var menuList = {};
+    var currentMenu = {};
 
     getMenus();
 
@@ -18,16 +18,17 @@ $(function() {
             'success' : function(data) {
                 console.log(data);
                 console.log("was successful");
-                $.each(data, function(i) {
-                    var d = data[i];
+                $.each(data.week, function(i) {
+                    var d = data.week[i];
                     var foods = {};
                     var comments = {};
-                    $.each(data[i].foods, function(j) {
-                        var d = data[i].foods;
+                    $.each(data.week[i].foods, function(j) {
+                        var d = data.week[i].foods[j];
+                        console.log(d);
                         foods[j] = new Food(d.name, d.description, d.food_type, d.snowmen, d.puddles, new Options(d.gluten, d.onions, d.nuts, d.dairy, d.vegetarian));
                     });
-                    $.each(data[i].comments, function(j) {
-                        var d = data[i].comments;
+                    $.each(data.week[i].comments, function(j) {
+                        var d = data.week[i].comments;
                         comments[j] = new Comment(d.user_name, d.text, d.snowmen);
                     });
                     var menu = new Menu(d.date, foods, comments);
@@ -43,19 +44,27 @@ $(function() {
 
     function loadTodaysMenu() {
         var day = getDayOfWeek(today.getDay());
-        $("#"+day).click();
+        currentMenu = $("#"+day).data("menu");
+        console.log(currentMenu);
+        $("#"+day).addClass("active");
+        $("#menu-date").append(moment(currentMenu.date).format("l"));  // show the date of currentMenu
+        currentMenu.display();
     }
 
     function assignToDateOption(menu) {
         menuList[moment(menu.date).format('l')] = menu;
-        var day = getDayOfWeek(menu.date.getDay());
+        var date = new Date(menu.date);
+        var day = getDayOfWeek(date.getDay());
+        console.log(day);
         var dateOption = $("#"+day);
         // assign menu to proper date option button
         dateOption.data("menu", menu);
+        console.log(dateOption.data("menu"));
     }
 
     $(".menu_date_btn").click(function(e) {
         currentMenu = $(e.target).data("menu");
+        console.log(e.target);
         $(e.target).addClass("active");
         $("#menu-date").append(moment(currentMenu.date).format("l"));  // show the date of currentMenu
         currentMenu.display();
