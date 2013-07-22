@@ -7,8 +7,16 @@ from models import *
 def index(request):
     return TemplateResponse(request,'templates/index.html',{})
 
-def update_food(request):
+def update_menu(request):
     return TemplateResponse(request, 'templates/update_menu.html')
+
+def food_post(request):
+    print 'im in'
+    if request.method=='POST':
+        print 'here'
+    elif request.method=='GET':
+        print 'you got got'
+        return TemplateResponse(request, 'templates/update_menu.html')
 
 @ajax_request
 def json_data(request):

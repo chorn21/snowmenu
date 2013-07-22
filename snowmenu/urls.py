@@ -17,6 +17,6 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', views.index, name='index'),
     url(r'^json_data', views.json_data, name='json_data'),
-    url(r'^update_menu', views.update_menu, name='update_menu')
-
+    url(r'^update_menu', views.update_menu, name='update_menu'),
+    url(r'^food_post', views.food_post, name='food_post')
 )

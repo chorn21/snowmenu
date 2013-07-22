@@ -15,7 +15,7 @@ $(function() {
     getFoods();
 
     function getMenus() {
-        $.ajax('http://localhost:8000/json_data?user="zak"&date="2013-07-19"', {
+        $.ajax('/json_data?user="zak"&date="2013-07-19"', {
             'method' : 'GET',
             'success' : function(data) {
                 console.log("was successful");
@@ -79,7 +79,7 @@ $(function() {
     }
 
     function getFoods() {
-        $.ajax('http://localhost:8000/json_data?all_food=1', {
+        $.ajax('/json_data?all_food=1', {
             'method' : 'GET',
             'success' : function(data) {
                 console.log(data);
@@ -128,7 +128,7 @@ $(function() {
         };
         console.log(data);
         // post the new food item to the server
-        $.ajax('/json_data?food_post', {
+        $.ajax('/food_post', {
             'method': 'POST',
             'data': JSON.stringify(data),
             'success': function() {
